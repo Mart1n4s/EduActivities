@@ -1,0 +1,21 @@
+image: python:3.11
+
+stages:
+  - build
+  - test
+
+before_script:
+  - python -m venv venv
+  - source venv/bin/activate
+  - pip install --upgrade pip setuptools
+  - pip install -r requirements.txt
+
+build:
+  stage: build
+  script:
+    - python main.py
+
+test:
+  stage: test
+  script:
+    - pytest -v
