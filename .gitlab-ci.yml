@@ -7,19 +7,19 @@ stages:
 before_script:
   - python -m venv venv
   - venv\Scripts\activate
-  - pip install --upgrade pip setuptools
-  - pip install -r requirements.txt
+  - venv\Scripts\python.exe -m pip install --upgrade pip setuptools
+  - venv\Scripts\python.exe -m pip install -r requirements.txt
 
 build:
   stage: build
   script:
-    - python main.py
+    - venv\Scripts\python.exe main.py
   only:
     - master
 
 test:
   stage: test
   script:
-    - pytest -v
+    - venv\Scripts\python.exe -m pytest -v
   only:
     - master
