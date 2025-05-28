@@ -1,0 +1,417 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - EduActivities{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="admin-section">
+    <div class="container">
+        <h2 class="text-center mb-4">Admin Dashboard</h2>
+        
+        <ul class="nav nav-tabs mb-4" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="activities-tab" data-bs-toggle="tab" data-bs-target="#activities" type="button" role="tab">
+                    Manage Activities
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab">
+                    Manage Users
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="adminTabsContent">
+            <div class="tab-pane fade show active" id="activities" role="tabpanel">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Activities List</h5>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addActivityModal">
+                            <i class="fas fa-plus me-2"></i>Add New Activity
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Date</th>
+                                        <th>Location</th>
+                                        <th>Organizer</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="activities-table-body">
+                                    <!-- Activities will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="users" role="tabpanel">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Users List</h5>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                            <i class="fas fa-plus me-2"></i>Add New User
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Name</th>
+                                        <th>Surname</th>
+                                        <th>Telephone Number</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-table-body">
+                                    <!-- Users will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="addActivityModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Activity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addActivityForm">
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Enter title..." required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" placeholder="Enter description..." rows="3" required></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Categories</label>
+                            <div class="category-list">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Art" id="categoryArt" style="width: 1.2em; height: 1.2em;">
+                                    <label class="form-check-label" for="categoryArt">Art</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Music" id="categoryMusic" style="width: 1.2em; height: 1.2em;">
+                                    <label class="form-check-label" for="categoryMusic">Music</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Dance" id="categoryDance" style="width: 1.2em; height: 1.2em;">
+                                    <label class="form-check-label" for="categoryDance">Dance</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Sports" id="categorySports" style="width: 1.2em; height: 1.2em;">
+                                    <label class="form-check-label" for="categorySports">Sports</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Technology" id="categoryTechnology" style="width: 1.2em; height: 1.2em;">
+                                    <label class="form-check-label" for="categoryTechnology">Technology</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Science" id="categoryScience" style="width: 1.2em; height: 1.2em;">
+                                    <label class="form-check-label" for="categoryScience">Science</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Language" id="categoryLanguage" style="width: 1.2em; height: 1.2em;">
+                                    <label class="form-check-label" for="categoryLanguage">Language</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Social" id="categorySocial" style="width: 1.2em; height: 1.2em;">
+                                    <label class="form-check-label" for="categorySocial">Social</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Outdoors" id="categoryOutdoors" style="width: 1.2em; height: 1.2em;">
+                                    <label class="form-check-label" for="categoryOutdoors">Outdoors</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Indoors" id="categoryIndoors" style="width: 1.2em; height: 1.2em;">
+                                    <label class="form-check-label" for="categoryIndoors">Indoors</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" name="date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Start Time</label>
+                                <input type="time" class="form-control" name="start_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Duration</label>
+                                <input type="text" class="form-control" name="duration" placeholder="Enter duration..." required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" name="location" placeholder="Enter location..." required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Price per person</label>
+                            <input type="text" class="form-control" name="price" placeholder="Enter price..." required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Max Participants</label>
+                            <input type="number" class="form-control" name="max_participants" min="1" placeholder="Enter max participants..." required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Activity Status</label>
+                            <select class="form-select" name="status" required>
+                                <option value="">Select Status</option>
+                                <option value="available">Available</option>
+                                <option value="full">Full</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Instructor</label>
+                            <input type="text" class="form-control" name="instructor" placeholder="Enter instructor..." required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Organizer</label>
+                        <select class="form-select" name="organizerId" required>
+                            <!-- Organizers -->
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitActivityBtn">Add Activity</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addUserModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" name="username" placeholder="Enter username..." required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" name="password" placeholder="Enter password..." required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Enter name..." required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Surname</label>
+                                <input type="text" class="form-control" name="surname" placeholder="Enter surname..." required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Telephone Number</label>
+                                <input type="text" class="form-control" name="telephone_number" placeholder="Enter telephone number..." required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" placeholder="Enter email..." required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select class="form-select" name="role" required>
+                            <option value="">Select Role</option>
+                            <option value="viewer">Viewer</option>
+                            <option value="organizer">Organizer</option>
+                        </select>
+                    </div>
+                </form>                    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitUserBtn">Add User</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editUserModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm">
+                    <input type="hidden" name="user_id" id="edit_user_id">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" name="username" id="edit_username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" name="password" id="edit_password" placeholder="Leave blank to keep current password">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" name="name" id="edit_name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Surname</label>
+                                <input type="text" class="form-control" name="surname" id="edit_surname" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Telephone Number</label>
+                                <input type="text" class="form-control" name="telephone_number" id="edit_telephone_number" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" id="edit_email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select class="form-select" name="role" id="edit_role" required>
+                            <option value="">Select Role</option>
+                            <option value="viewer">Viewer</option>
+                            <option value="organizer">Organizer</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitEditUserBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editActivityModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Activity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editActivityForm">
+                    <input type="hidden" name="activity_id" id="edit_activity_id">
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" id="edit_title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" id="edit_description" rows="3" required></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Categories</label>
+                            <div class="category-list" id="edit_categories">
+                                <!-- Categories -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" name="date" id="edit_date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Start Time</label>
+                                <input type="time" class="form-control" name="start_time" id="edit_start_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Duration</label>
+                                <input type="text" class="form-control" name="duration" id="edit_duration" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" name="location" id="edit_location" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Price per person</label>
+                            <input type="text" class="form-control" name="price" id="edit_price" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Max Participants</label>
+                            <input type="number" class="form-control" name="max_participants" id="edit_max_participants" min="1" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Activity Status</label>
+                            <select class="form-select" name="status" id="edit_status" required>
+                                <option value="">Select Status</option>
+                                <option value="available">Available</option>
+                                <option value="full">Full</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Instructor</label>
+                            <input type="text" class="form-control" name="instructor" id="edit_instructor" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Organizer</label>
+                        <select class="form-select" name="organizerId" id="edit_organizerId" required>
+                            <option value="">Select Organizer</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitEditActivityBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', path='js/admin.js') }}"></script>
+{% endblock %} 

@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block title %}Organizer Dashboard - EduActivities{% endblock %}
+
+{% block content %}
+<section class="organizer-section py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>My Activities</h2>
+            <div>
+                <a href="/organizer/reservations" class="btn btn-primary">
+                    <i class="fas fa-calendar-check me-2"></i>View Reservations
+                </a>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activityModal">
+                    <i class="fas fa-plus me-2"></i>Add Activity
+                </button>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="search-input" placeholder="Search activities...">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-select" id="category-filter">
+                            <option value="">All Categories</option>
+                            <option value="art">Art</option>
+                            <option value="music">Music</option>
+                            <option value="dance">Dance</option>
+                            <option value="sports">Sports</option>
+                            <option value="technology">Technology</option>
+                            <option value="language">Language</option>
+                            <option value="social">Social</option>
+                            <option value="science">Science</option>
+                            <option value="outdoors">Outdoors</option>
+                            <option value="indoors">Indoors</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activities-table-body">
+                            <!-- Activities -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5 d-none" id="no-activities">
+            <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+            <h4>No Activities Found</h4>
+            <p class="text-muted">Start by adding a new activity!</p>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="activityModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Add New Activity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="activityForm">
+                    <input type="hidden" id="activityId" name="activityId">
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Enter title..." required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" placeholder="Enter description..." rows="3" required></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Categories</label>
+                            <div class="category-list">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Art" id="categoryArt">
+                                    <label class="form-check-label" for="categoryArt">Art</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Music" id="categoryMusic">
+                                    <label class="form-check-label" for="categoryMusic">Music</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Dance" id="categoryDance">
+                                    <label class="form-check-label" for="categoryDance">Dance</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Sports" id="categorySports">
+                                    <label class="form-check-label" for="categorySports">Sports</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Technology" id="categoryTechnology">
+                                    <label class="form-check-label" for="categoryTechnology">Technology</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Science" id="categoryScience">
+                                    <label class="form-check-label" for="categoryScience">Science</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Language" id="categoryLanguage">
+                                    <label class="form-check-label" for="categoryLanguage">Language</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Social" id="categorySocial">
+                                    <label class="form-check-label" for="categorySocial">Social</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Outdoors" id="categoryOutdoors">
+                                    <label class="form-check-label" for="categoryOutdoors">Outdoors</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category" value="Indoors" id="categoryIndoors">
+                                    <label class="form-check-label" for="categoryIndoors">Indoors</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" name="date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Start Time</label>
+                                <input type="time" class="form-control" name="start_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Duration</label>
+                                <input type="text" class="form-control" name="duration" placeholder="Enter duration..." required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" name="location" placeholder="Enter location..." required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Price per person</label>
+                            <input type="text" class="form-control" name="price" placeholder="Enter price..." required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Max Participants</label>
+                            <input type="number" class="form-control" name="max_participants" min="1" placeholder="Enter max participants..." required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Activity Status</label>
+                            <select class="form-select" name="status" required>
+                                <option value="">Select Status</option>
+                                <option value="available">Available</option>
+                                <option value="full">Full</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Instructor</label>
+                            <input type="text" class="form-control" name="instructor" placeholder="Enter instructor..." required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitActivityBtn">Save Activity</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editActivityModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Activity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editActivityForm">
+                    <input type="hidden" name="activity_id" id="edit_activity_id">
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" id="edit_title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" id="edit_description" rows="3" required></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Categories</label>
+                            <div class="category-list" id="edit_categories">
+                                <!-- Categories -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" name="date" id="edit_date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Start Time</label>
+                                <input type="time" class="form-control" name="start_time" id="edit_start_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Duration</label>
+                                <input type="text" class="form-control" name="duration" id="edit_duration" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" name="location" id="edit_location" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Price per person</label>
+                            <input type="text" class="form-control" name="price" id="edit_price" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Max Participants</label>
+                            <input type="number" class="form-control" name="max_participants" id="edit_max_participants" min="1" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Activity Status</label>
+                            <select class="form-select" name="status" id="edit_status" required>
+                                <option value="">Select Status</option>
+                                <option value="available">Available</option>
+                                <option value="full">Full</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Instructor</label>
+                            <input type="text" class="form-control" name="instructor" id="edit_instructor" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitEditActivityBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', path='/js/organizer.js') }}"></script>
+{% endblock %} 

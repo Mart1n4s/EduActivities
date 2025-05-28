@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}View Activities - EduActivities{% endblock %}
+
+{% block content %}
+<body data-user-role="{{ user.role }}" data-user-id="{{ user.id }}">
+<section class="viewer-section py-5">
+   <div class="container">
+      <div class="card mb-4">
+         <div class="card-body">
+            <div class="row g-3">
+               <div class="col-md-6">
+                  <div class="input-group">
+                     <input type="text" class="form-control" id="search-input" placeholder="Search activities...">
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <select class="form-select" id="category-filter">
+                     <option value="">All Categories</option>
+                     <option value="art">Art</option>
+                     <option value="music">Music</option>
+                     <option value="dance">Dance</option>
+                     <option value="sports">Sports</option>
+                     <option value="technology">Technology</option>
+                     <option value="language">Language</option>
+                     <option value="social">Social</option>
+                     <option value="science">Science</option>
+                     <option value="outdoors">Outdoors</option>
+                     <option value="indoors">Indoors</option>
+                  </select>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row g-4" id="activities-grid"></div>
+      <div class="text-center mt-5 d-none" id="no-activities">
+         <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+         <h4>No Activities Available</h4>
+         <p class="text-muted">Check back later for new activities!</p>
+      </div>
+   </div>
+</section>
+
+<div class="modal fade" id="activityModal" tabindex="-1" aria-hidden="true">
+   <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Activity Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+         </div>
+         <div class="modal-body">
+            <div class="activity-details"></div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" id="reserveButton" style="display: none;">
+               <i class="fas fa-calendar-check"></i> Reserve
+            </button>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', path='js/viewer.js') }}"></script>
+{% endblock %} 

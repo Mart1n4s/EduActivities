@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-section w-100 py-5" style="background-color: #f8f9fa;">
+    <div class="text-center">
+        <h1 class="display-4 mb-4">Discover Educational Activities</h1>
+        <p class="lead mb-4">Look for educational activities and improve wherever you want!</p>
+        <a class="btn btn-light btn-lg cta-button {% if request.url.path == '/auth/login' %}active{% endif %}" href="/auth/login">Get started</a>
+    </div>
+</section>
+
+<section id="features" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Why choose EduActivities?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card feature-card h-100 p-4">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">User friendly</h3>
+                        <p class="card-text">Easy and convenient search.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 p-4">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Recommendations</h3>
+                        <p class="card-text">Get recommendations based on your interactions.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 p-4">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Information importance</h3>
+                        <p class="card-text">Get only necessary information about educational activities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
