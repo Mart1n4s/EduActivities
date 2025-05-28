@@ -13,7 +13,7 @@ before_script:
 build:
   stage: build
   script:
-    - venv\Scripts\python.exe main.py
+    - python -m compileall .
   only:
     - master
 
