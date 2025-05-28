@@ -14,8 +14,12 @@ build:
   stage: build
   script:
     - python main.py
+  only:
+    - master
 
 test:
   stage: test
   script:
     - pytest -v
+  only:
+    - master
